@@ -12,19 +12,37 @@ export const ProductsProvider = (WrappedComponent) => {
       setFilters: this.setFilters.bind(this)
     };
 
+    /**
+     * desired format:
+     * filters: {
+     *  category1: {
+     *    option1: false,
+     *    option2: true,
+     *  },
+     *  cateogory2: {
+     *    option1: true 
+     *  }
+     * }
+     */
     formatFilters() {
       return products.filters.reduce((acc, filter) => {
-        return { [filter.name]: filter.values.reduce((acc, value) => {
-          return { [value]: false, ...acc }
-        }, {}), ...acc };
+        return { ...acc, [filter.name]: filter.values.reduce((acc, value) => {
+          return { ...acc, [value]: false }
+        }, {}) };
       }, {});
     }
 
     setFilters(name, value) {
-      let { filters } = this.state;
+      let { filters, list, selected } = this.state;
       
       filters[name][value] = !filters[name][value]
-      this.setState({ filters });
+
+      this.setState({
+        selected: this.state.list.filter(product => {
+          return filters.brand[product.brand];
+        }),
+        filters
+      });
     }
     
     render() {
