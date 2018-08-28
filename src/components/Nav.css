@@ -1,0 +1,28 @@
+.nav-bar {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 60px;
+  background-color: rgb(140, 194, 255);
+}
+
+.nav-bar > ul {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0;
+  list-style: none;
+}
+
+.nav-bar > ul > li {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 110px;
+  height: 50px;
+  margin: 5px;
+}
+
+.nav-bar > ul > li > button{
+  width: inherit;
+  height: inherit;
+}

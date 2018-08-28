@@ -1,0 +1,10 @@
+.filter-component {
+  flex: 0 200px;
+  height: inherit;
+  background-color: rgb(110, 181, 252);
+}
+
+.filter-category > ul {
+  list-style: none;
+  text-align: left;
+}
