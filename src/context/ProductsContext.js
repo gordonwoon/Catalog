@@ -39,10 +39,21 @@ export const ProductsProvider = (WrappedComponent) => {
 
       this.setState({
         selected: list.filter(product => {
-          return filters.brand[product.brand] && filters.price[this.getPriceRange(product.price)];
+          return (this.shouldFilter('brand', filters) ? filters.brand[product.brand] : true)
+            && (this.shouldFilter('price', filters) ? filters.price[this.getPriceRange(product.price)] : true);
         }),
         filters
       });
+    }
+
+    shouldFilter(name, filters) {
+      let activeFilter = false;
+
+      Object.keys(filters[name]).forEach(key => {
+        activeFilter = activeFilter || filters[name][key]
+      });
+
+      return activeFilter;
     }
 
     getPriceRange(productPrice) {
