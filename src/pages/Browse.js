@@ -9,12 +9,12 @@ import './Browse.css';
 
 class BrowsePage extends React.Component {
   render() {
-    let { filters, filterList, selected } = this.props.products;
+    let { filters, setFilters, selected } = this.props.products;
     return (
       <div className="browse-page">
         <Filter 
           filters={filters}
-          filterList={filterList}
+          setFilters={setFilters}
           />
         <Products list={selected}/>
       </div>

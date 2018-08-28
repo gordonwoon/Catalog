@@ -3,54 +3,42 @@ import React from 'react';
 import './Filter.css';
 
 export default class Filter extends React.Component {
-  state = {
-    filter: {}
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    return { [props.filters]: props.filters };
-  }
-  setFilter(name, value) {
-    console.log('name', name);
-    console.log('value', value);
-    
-    let { filter } = this.state;
-
-    filter.map(filter => {
-      if(filter.name === name) {
-        filter.values
-      }
+  renderValues(name, values) {
+    return Object.keys(values).forEach((value, key) => {
+      console.log('key', key);
+      console.log('value', value);
+      console.log('values', values[value]);
+      return (
+        <li key={key}>
+        <input
+          type="checkbox"
+          value={value}
+          checked={values[value]}
+          onChange={() => this.props.setFilters(name, value)}
+        />{value}</li>
+      )
     })
   }
-  renderCategoryFilters(filter) {
+  renderCategory(name, values) {
     return (
       <div className="filter-category">
-        <strong>{filter.name}</strong>
+        <strong>{name}</strong>
         <ul>
-          {filter.values.map((value, key) => {
-            return (
-              <li key={key}>
-              <input
-                type="checkbox"
-                value={value}
-                onClick={this.setFilter.bind(this, filter.name, value)}
-              />{value}</li>
-            )
-          })}
+          {this.renderValues(name, values)}
         </ul>
       </div>
     )
   }
+  renderFilters() {
+    for(let filter in this.props.filters) {
+      console.log(filter);
+      return this.renderCategory(filter, this.props.filters[filter]);
+    }
+  }
   render() {
-    console.log(this.state);
     return (
       <div className="filter-component">
-        <form
-          onChange={(e, i) => console.log('form changed', e.target)}
-          onClick={(e, i) => console.log('form click', e.target)}
-          onSubmit={(e, i) => console.log('form submit', e.target)}>
-          {this.props.filters.map(filter => this.renderCategoryFilters(filter))}
-        </form>
+        {this.renderFilters()}
       </div>
     )
   }

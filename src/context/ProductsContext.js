@@ -6,17 +6,25 @@ export const ProductsContext = React.createContext();
 export const ProductsProvider = (WrappedComponent) => {
   return class extends React.Component {
     state = {
-      filters: products.filters,
+      filters: this.formatFilters(),
       list: products.products,
       selected: products.products,
-      filterList: this.filterList.bind(this)
+      setFilters: this.setFilters.bind(this)
     };
 
-    filterList(name, value) {
-      let { list } = this.state;
-      this.setState({
-        selected: list.filter(product => product.brand === name)
-      });
+    formatFilters() {
+      return products.filters.reduce((acc, filter) => {
+        return { [filter.name]: filter.values.reduce((acc, value) => {
+          return { [value]: false, ...acc }
+        }, {}), ...acc };
+      }, {});
+    }
+
+    setFilters(name, value) {
+      let { filters } = this.state;
+      
+      filters[name][value] = !filters[name][value]
+      this.setState({ filters });
     }
     
     render() {
