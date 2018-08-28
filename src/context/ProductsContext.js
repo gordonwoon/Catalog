@@ -35,14 +35,30 @@ export const ProductsProvider = (WrappedComponent) => {
     setFilters(name, value) {
       let { filters, list, selected } = this.state;
       
-      filters[name][value] = !filters[name][value]
+      filters[name][value] = !filters[name][value];
 
       this.setState({
-        selected: this.state.list.filter(product => {
-          return filters.brand[product.brand];
+        selected: list.filter(product => {
+          return filters.brand[product.brand] && filters.price[this.getPriceRange(product.price)];
         }),
         filters
       });
+    }
+
+    getPriceRange(productPrice) {
+      let price = parseFloat(productPrice);
+      if(price < 1) {
+        return '0-0.99';
+      }
+      else if(price >= 1 && price < 2) {
+        return '1-1.99';
+      }
+      else if(price >= 2 && price < 3) {
+        return '2-2.99';
+      }
+      else {
+        return null
+      }
     }
     
     render() {
