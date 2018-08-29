@@ -6,7 +6,7 @@ export default class Filter extends React.Component {
   renderCategory(category, values) {
     return (
       <div className="filter-category">
-        <strong>{category}</strong>
+        <span>{category}</span>
         <ul>
           {Object.keys(values).map((value, key) => {
             return (

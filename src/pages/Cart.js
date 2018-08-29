@@ -1,11 +1,20 @@
 import React from 'react';
 
-export default class CartPage extends React.Component {
+import Gallery from '../components/Gallery';
+
+import { ProductsConsumer } from '../context/ProductsContext';
+
+import './Cart.css';
+
+class CartPage extends React.Component {
   render() {
+    let { cart, removeFromCart } = this.props.products;
     return (
       <div className="cart-page">
-        Browse Page
+        <Gallery list={cart} handleClick={removeFromCart} btnName="Remove From Cart"/>
       </div>
     )
   }
 }
+
+export default ProductsConsumer(CartPage);

@@ -9,7 +9,10 @@ export const ProductsProvider = (WrappedComponent) => {
       filters: this.formatFilters(),
       list: products.products,
       selected: products.products,
-      setFilters: this.setFilters.bind(this)
+      cart: [],
+      setFilters: this.setFilters.bind(this),
+      addToCart: this.addToCart.bind(this),
+      removeFromCart: this.removeFromCart.bind(this)
     };
 
     /**
@@ -25,17 +28,17 @@ export const ProductsProvider = (WrappedComponent) => {
      * }
      */
     formatFilters() {
-      return products.filters.reduce((acc, filter) => {
-        return { ...acc, [filter.name]: filter.values.reduce((acc, value) => {
+      return products.filters.reduce((acc, category) => {
+        return { ...acc, [category.name]: category.values.reduce((acc, value) => {
           return { ...acc, [value]: false }
         }, {}) };
       }, {});
     }
 
-    setFilters(name, value) {
+    setFilters(category, value) {
       let { filters, list, selected } = this.state;
       
-      filters[name][value] = !filters[name][value];
+      filters[category][value] = !filters[category][value];
 
       this.setState({
         selected: list.filter(product => {
@@ -46,14 +49,30 @@ export const ProductsProvider = (WrappedComponent) => {
       });
     }
 
-    shouldFilter(name, filters) {
+    shouldFilter(category, filters) {
       let activeFilter = false;
 
-      Object.keys(filters[name]).forEach(key => {
-        activeFilter = activeFilter || filters[name][key]
+      Object.keys(filters[category]).forEach(key => {
+        activeFilter = activeFilter || filters[category][key]
       });
 
       return activeFilter;
+    }
+
+    addToCart(index) {
+      let { cart, selected } = this.state;
+
+      cart.push(selected[index]);
+
+      this.setState({ cart });
+    }
+
+    removeFromCart(index) {
+      let { cart } = this.state;
+
+      cart.splice(index, 1);
+
+      this.setState({ cart });
     }
 
     getPriceRange(productPrice) {

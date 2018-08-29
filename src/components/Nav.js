@@ -5,7 +5,9 @@ import './Nav.css';
 
 class Nav extends React.Component {
   componentDidMount() {
-    this.props.history.push('./browse');
+    if(window.location.pathname === '/') {
+      this.props.history.push('/browse');
+    }
   }
   getPathFromUrl() {
     let path = this.props.location.pathname.match(/[a-z]+/g);
@@ -18,7 +20,10 @@ class Nav extends React.Component {
   renderButton(text, route) {
     return (
       <li key={text}>
-        <button onClick={()=>this.props.history.push(route)}>{text}</button>
+        <button 
+          className={text === 'Cart' ? 'btn-cart' : null} 
+          onClick={()=>this.props.history.push(route)}
+        >{text}</button>
       </li>
     )
   }

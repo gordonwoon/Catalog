@@ -3,6 +3,7 @@
   top: 0;
   width: 100vw;
   height: 60px;
+  border-bottom: 1px solid black;
   background-color: rgb(140, 194, 255);
 }
 
@@ -25,4 +26,11 @@
 .nav-bar > ul > li > button{
   width: inherit;
   height: inherit;
+  font-size: 2rem;
+  font-weight: bold;
+  border: 1px solid black;
+}
+
+.btn-cart {
+  background-color: lightcoral;
 }
