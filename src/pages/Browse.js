@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Products from '../components/Products';
+import Gallery from '../components/Gallery';
 import Filter from '../components/Filter';
 
 import { ProductsConsumer } from '../context/ProductsContext';
@@ -16,7 +16,7 @@ class BrowsePage extends React.Component {
           filters={filters}
           setFilters={setFilters}
           />
-        <Products list={selected}/>
+        <Gallery list={selected}/>
       </div>
     )
   }

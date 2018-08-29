@@ -1,5 +1,5 @@
 .filter-component {
-  flex: 0 200px;
+  flex: 0 0 200px;
   height: inherit;
   background-color: rgb(110, 181, 252);
 }
